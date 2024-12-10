@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const { pool } = require("./db");
 
-const whitelistEndpoints = ["/api-docs/*", "/"];
+const whitelistEndpoints = ["/api-docs/*", "/", "/metrics", "/health"];
 
 const matchesWhitelist = (path) => {
   return whitelistEndpoints.some((endpoint) => {

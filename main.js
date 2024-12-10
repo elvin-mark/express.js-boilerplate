@@ -6,12 +6,15 @@ const { metricsMiddleware, register } = require("./metrics");
 const basicAuth = require("./auth");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocs = require("./swagger");
-const itemsService = require("./services/items");
+const itemsController = require("./controllers/items");
+const cors = require("cors");
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
+
+app.use(cors());
 
 app.use(basicAuth);
 
@@ -58,37 +61,7 @@ app.get("/metrics", async (req, res) => {
   }
 });
 
-/**
- * @swagger
- * /items:
- *   get:
- *     summary: Get all items
- *     description: Retrieves all items from the database.
- *     parameters:
- *      - name: pageSize
- *        in: query
- *        type: number
- *      - name: page
- *        in: query
- *        type: number
- *     responses:
- *       200:
- *         description: A list of items
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *       500:
- *         description: Internal Server Error
- */
-app.get("/items", async (req, res) => {
-  const pageSize = req.query["pageSize"] || 10;
-  const page = req.query["page"] || 0;
-  const result = await itemsService.get_items(pageSize, page);
-  res.send(result);
-});
+app.get("/items", itemsController.getItems);
 
 app.listen(port, () => {
   logger.info(`Server starting on port ${port}`);

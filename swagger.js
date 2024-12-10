@@ -32,7 +32,7 @@ const swaggerOptions = {
       },
     },
   },
-  apis: ["./main.js"],
+  apis: ["./main.js", "./controllers/*"],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
