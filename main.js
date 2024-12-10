@@ -1,5 +1,9 @@
 const env = process.env.NODE_ENV || "local";
-require("dotenv").config({ path: `environments/${env}/.env` });
+results = require("dotenv").config({ path: `environments/${env}/.env` });
+if (results.error) {
+  console.log("environment file not found");
+  process.kill(process.pid, "SIGTERM");
+}
 const express = require("express");
 const logger = require("./logger");
 const { metricsMiddleware, register } = require("./metrics");
