@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: express-js-sample-svc
+spec:
+  selector:
+    app: express-js-sample
+  ports:
+  - port: 3000
+    targetPort: 3000
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-js-sample
+spec:
+  selector:
+    matchLabels:
+      app: express-js-sample
+  template:
+    metadata:
+      labels:
+        app: express-js-sample
+    spec:
+      containers:
+      - name: express-js-sample
+        image: tools/express-js-sample
+        imagePullPolicy: Never
+        env:
+          - name: NODE_ENV
+            value: sandbox
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+
