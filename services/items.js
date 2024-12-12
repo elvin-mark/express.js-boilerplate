@@ -1,10 +1,12 @@
 const { pool } = require("../db");
 const logger = require("../logger");
+const itemsQueries = require("../queries/items");
 
 async function get_items(pageSize, page) {
-  const result = await pool.query(
-    `SELECT * FROM items LIMIT ${pageSize} OFFSET ${page * pageSize}`
-  );
+  const result = await pool.query(itemsQueries.getItemsQuery, [
+    pageSize,
+    page * pageSize,
+  ]);
   logger.info("Fetched items from database");
   return result.rows;
 }

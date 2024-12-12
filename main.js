@@ -7,7 +7,7 @@ if (results.error) {
 const express = require("express");
 const logger = require("./logger");
 const { metricsMiddleware, register } = require("./metrics");
-const basicAuth = require("./auth");
+const { basicAuth, checkRole } = require("./auth");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocs = require("./swagger");
 const itemsController = require("./controllers/items");
@@ -65,7 +65,7 @@ app.get("/metrics", async (req, res) => {
   }
 });
 
-app.get("/items", itemsController.getItems);
+app.get("/items", checkRole("ADMIN"), itemsController.getItems);
 
 app.listen(port, () => {
   logger.info(`Server starting on port ${port}`);

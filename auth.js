@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 const { pool } = require("./db");
+const usersService = require("./queries/users");
+const logger = require("./logger");
 
 const whitelistEndpoints = ["/api-docs/*", "/", "/metrics", "/health"];
 
@@ -27,7 +29,7 @@ const basicAuth = async (req, res, next) => {
   const [username, password] = credentials.split(":");
 
   try {
-    const result = await pool.query("SELECT * FROM users WHERE username = $1", [
+    const result = await pool.query(usersService.getUsersByNameQuery, [
       username,
     ]);
     if (result.rows.length === 0) {
@@ -43,9 +45,23 @@ const basicAuth = async (req, res, next) => {
     req.user = { id: user.id, username: user.username };
     next();
   } catch (err) {
-    console.error(err.message);
+    logger.error(err.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
-module.exports = basicAuth;
+const checkRole = (role) => {
+  return async (req, res, next) => {
+    const result = await pool.query(usersService.getRolesByUserId, [
+      req.user.id,
+    ]);
+    const foundRole = result.rows.find((e) => e["name"] == role);
+    if (!foundRole) {
+      res.status(400).json({ error: "Not Authorized" });
+      return;
+    }
+    next();
+  };
+};
+
+module.exports = { basicAuth, checkRole };
