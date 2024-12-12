@@ -26,9 +26,10 @@ spec:
       - name: express-js-sample
         image: tools/express-js-sample
         imagePullPolicy: Never
-        env:
-          - name: NODE_ENV
-            value: sandbox
+        command:
+          - node 
+          - --env-file=./environments/sandbox/.env
+          - ./main.js
         resources:
           limits:
             memory: "128Mi"

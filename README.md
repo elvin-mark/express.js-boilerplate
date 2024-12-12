@@ -1,10 +1,24 @@
+# Simple Express JS API boilerplate
+
+## Run Me on local
+
+```sh
+node --env-file=./environments/local/.env ./main.js
+```
+
+## Build docker image
+
 ```sh
 docker build -t tools/express-js-sample -f deployment/Dockerfile .
 ```
 
+### Run docker image
+
 ```sh
-docker run -it --name testing -p 3000:3000 -e NODE_ENV=sandbox tools/express-js-sample
+docker run -it --name testing -p 3000:3000 --entrypoint node tools/express-js-sample --env-file=./environments/sandbox/.env ./main.js
 ```
+
+### Deploy in K8s
 
 ```sh
 kubectl apply -f deployment/k8s.yaml
