@@ -6,9 +6,19 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerDocs = require("./swagger");
 const itemsController = require("./controllers/items");
 const cors = require("cors");
+const helmet = require("helmet");
+const { rateLimit } = require("express-rate-limit");
 
 const app = express();
 const port = 3000;
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 100,
+});
+app.use(limiter);
+
+app.use(helmet());
 
 app.use(express.json());
 

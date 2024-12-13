@@ -29,7 +29,7 @@ spec:
         command:
           - node 
           - --env-file=./environments/sandbox/.env
-          - ./main.js
+          - src/main.js
         resources:
           limits:
             memory: "128Mi"

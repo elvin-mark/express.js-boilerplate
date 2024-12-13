@@ -11,4 +11,4 @@ RUN npm i
 
 EXPOSE 3000
 
-ENTRYPOINT [ "node", "main.js" ]
+ENTRYPOINT [ "node", "src/main.js" ]

@@ -1,0 +1,27 @@
+version: v2
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    healthcheck:
+      test: ["CMD-SHELL", "psql -U postgres -c 'SELECT * FROM NOW()' || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+  backend:
+    image: tools/express-js-sample
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=mock
+      - LOG_LEVEL="info"
+      - LOG_FILE_PATH=./logs/app.log
+    ports:
+      - 3000:3000
+    depends_on:
+      db:
+        condition: service_healthy

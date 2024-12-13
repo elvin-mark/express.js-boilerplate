@@ -13,7 +13,7 @@ npm i
 ## Run Me on local
 
 ```sh
-node --env-file=./environments/local/.env ./main.js
+node --env-file=./environments/local/.env src/main.js
 ```
 
 ## Build docker image
@@ -25,7 +25,7 @@ docker build -t tools/express-js-sample -f deployment/Dockerfile .
 ### Run docker image
 
 ```sh
-docker run -it --name testing -p 3000:3000 --entrypoint node tools/express-js-sample --env-file=./environments/sandbox/.env ./main.js
+docker run -it --name testing -p 3000:3000 --entrypoint node tools/express-js-sample --env-file=./environments/sandbox/.env src/main.js
 ```
 
 ### Deploy in K8s

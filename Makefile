@@ -1,11 +1,11 @@
 run:
-	node --env-file=./environments/local/.env ./main.js
+	node --env-file=./environments/local/.env src/main.js
 
 build-docker:
 	docker build -t tools/express-js-sample -f deployment/Dockerfile .
 
 run-image:
-	docker run -it --name testing -p 3000:3000 --entrypoint node tools/express-js-sample --env-file=./environments/sandbox/.env ./main.js
+	docker run -it --name testing -p 3000:3000 --entrypoint node tools/express-js-sample --env-file=./environments/sandbox/.env src/main.js
 
 deploy:
 	kubectl apply -f deployment/k8s.yaml
