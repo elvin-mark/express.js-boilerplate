@@ -10,6 +10,9 @@ run-image:
 deploy:
 	kubectl apply -f deployment/k8s.yaml
 
+delete-deploy:
+	kubectl delete -f deployment/k8s.yaml
+
 run-prometheus:
 	docker run -p 9090:9090 --name=prometheus -v $PWD/observability/prometheus.yaml:/etc/prometheus/prometheus.yml prom/prometheus
 
