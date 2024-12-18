@@ -10,10 +10,24 @@ Install dependecy packages
 npm i
 ```
 
+Create the database on your local DB
+
+```sql
+CREATE DATABASE mock;
+```
+
 ## Run Me on local
+
+Run the following commnad to start running the application
 
 ```sh
 node --env-file=./environments/local/.env src/main.js
+```
+
+Or,
+
+```sh
+npm run local
 ```
 
 ## Build docker image
@@ -42,4 +56,20 @@ docker run -p 9090:9090 --name=prometheus -v $PWD/observability/prometheus.yaml:
 
 ```sh
 docker run --name=grafana -p 3030:3000 grafana/grafana
+```
+
+## Test
+
+### Load Testing
+
+For load testing, install artillery using the following command
+
+```sh
+npm i -g artillery
+```
+
+Then run this to start the load test
+
+```sh
+npm run load-test
 ```
