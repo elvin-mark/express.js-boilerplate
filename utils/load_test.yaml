@@ -7,10 +7,14 @@ config:
       arrivalCount: 20
   defaults:
     headers:
-      x-my-service-auth: '987401838271002188298567'
+      Authorization: 'Basic YWRtaW46cGFzc3dvcmQ='
 
 scenarios:
   - name: "Health Check"
     flow:
     - get:
         url: "/health"
+  - name: "Items"
+    flow:
+    - get:
+        url: "/items"
