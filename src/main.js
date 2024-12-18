@@ -4,6 +4,7 @@ const { metricsMiddleware, register } = require("./metrics");
 const { basicAuth, checkRole } = require("./auth");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocs = require("./swagger");
+const { runMigrations } = require("./migrate");
 const itemsController = require("./controllers/items");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -71,6 +72,14 @@ app.get("/metrics", async (req, res) => {
 
 app.get("/items", checkRole("ADMIN"), itemsController.getItems);
 
-app.listen(port, () => {
-  logger.info(`Server starting on port ${port}`);
-});
+runMigrations().then(
+  () => {
+    logger.info("Migrations completed.");
+    app.listen(port, () => {
+      logger.info(`Server starting on port ${port}`);
+    });
+  },
+  (err) => {
+    logger.error("Error during migration:", err);
+  }
+);

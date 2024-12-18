@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "load-test": "artillery run utils/load_test.yaml --output utils/report.json",
+    "migrate": "node --env-file=./environments/local/.env src/migrate.js",
+    "local": "node --env-file=./environments/local/.env src/main.js"
+  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",

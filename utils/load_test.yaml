@@ -1,0 +1,16 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 10
+      arrivalRate: 5
+    - duration: 10
+      arrivalCount: 20
+  defaults:
+    headers:
+      x-my-service-auth: '987401838271002188298567'
+
+scenarios:
+  - name: "Health Check"
+    flow:
+    - get:
+        url: "/health"
