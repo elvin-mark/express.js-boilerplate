@@ -72,14 +72,18 @@ app.get("/metrics", async (req, res) => {
 
 app.get("/items", checkRole("ADMIN"), itemsController.getItems);
 
-runMigrations().then(
-  () => {
-    logger.info("Migrations completed.");
-    app.listen(port, () => {
-      logger.info(`Server starting on port ${port}`);
-    });
-  },
-  (err) => {
-    logger.error("Error during migration:", err);
-  }
-);
+if (require.main != null && require.main === module) {
+  runMigrations().then(
+    () => {
+      logger.info("Migrations completed.");
+      app.listen(port, () => {
+        logger.info(`Server starting on port ${port}`);
+      });
+    },
+    (err) => {
+      logger.error("Error during migration:", err);
+    }
+  );
+}
+
+module.exports = app;

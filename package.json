@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "test": "jest",
     "load-test": "artillery run utils/load_test.yaml --output utils/report.json",
     "migrate": "node --env-file=./environments/local/.env src/migrate.js",
     "local": "node --env-file=./environments/local/.env src/main.js"
@@ -15,5 +16,10 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "artillery": "^2.0.21",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
   }
 }
