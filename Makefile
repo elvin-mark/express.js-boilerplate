@@ -18,3 +18,6 @@ run-prometheus:
 
 run-grafana:
 	docker run --name=grafana -p 3030:3000 grafana/grafana
+
+test:
+	npm run test

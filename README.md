@@ -73,3 +73,11 @@ Then run this to start the load test
 ```sh
 npm run load-test
 ```
+
+### Unit Test
+
+Run the following command to run the tests
+
+```sh
+npm run test
+```
